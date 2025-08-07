@@ -8,16 +8,17 @@
     <key>ProgramArguments</key>
     <array>
         <string>/bin/bash</string>
-        <string>/Users/william.perez/Linkshell/stt_hotkey/run.sh</string>
+        <string>-lc</string>
+        <string>"cd \"$HOME/linkshell\" 2>/dev/null || cd \"$HOME/Linkshell/stt_hotkey\"; ./run.sh"</string>
     </array>
 
     <key>RunAtLoad</key>
     <true/>
 
     <key>StandardOutPath</key>
-    <string>/Users/william.perez/Library/Logs/linkshell-stt.out.log</string>
+    <string>/tmp/linkshell-stt.out.log</string>
     <key>StandardErrorPath</key>
-    <string>/Users/william.perez/Library/Logs/linkshell-stt.err.log</string>
+    <string>/tmp/linkshell-stt.err.log</string>
 
     <key>EnvironmentVariables</key>
     <dict>

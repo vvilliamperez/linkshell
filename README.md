@@ -23,7 +23,7 @@ brew list portaudio >/dev/null 2>&1 || brew install portaudio
 2) Create a virtual environment and install dependencies:
 
 ```bash
-cd /Users/william.perez/Linkshell/stt_hotkey
+cd /path/to/linkshell   # repo root (this folder)
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -U pip
@@ -33,7 +33,7 @@ pip install -r requirements.txt
 3) Set your OpenAI API key:
 
 ```bash
-cp .env.example .env
+cp example.env .env
 # then edit .env and set OPENAI_API_KEY=... (or export OPENAI_API_KEY in your shell)
 ```
 
@@ -55,9 +55,9 @@ You can use a LaunchAgent to auto-start the tool at login.
 1) Edit the provided plist if needed and load it:
 
 ```bash
-launchctl unload ~/Library/LaunchAgents/com.linkshell.stt.plist 2>/dev/null || true
-cp /Users/william.perez/Linkshell/stt_hotkey/com.linkshell.stt.plist ~/Library/LaunchAgents/
-launchctl load ~/Library/LaunchAgents/com.linkshell.stt.plist
+launchctl unload "$HOME/Library/LaunchAgents/com.linkshell.stt.plist" 2>/dev/null || true
+cp ./com.linkshell.stt.plist "$HOME/Library/LaunchAgents/"
+launchctl load "$HOME/Library/LaunchAgents/com.linkshell.stt.plist"
 launchctl start com.linkshell.stt
 ```
 
@@ -100,9 +100,9 @@ Capturing Caps Lock reliably across macOS apps is tricky. A common pattern is to
 ## Uninstall
 
 ```bash
-launchctl unload ~/Library/LaunchAgents/com.linkshell.stt.plist 2>/dev/null || true
-rm -f ~/Library/LaunchAgents/com.linkshell.stt.plist
-rm -rf /Users/william.perez/Linkshell/stt_hotkey/.venv
+launchctl unload "$HOME/Library/LaunchAgents/com.linkshell.stt.plist" 2>/dev/null || true
+rm -f "$HOME/Library/LaunchAgents/com.linkshell.stt.plist"
+rm -rf .venv
 ```
 
 ## Troubleshooting
