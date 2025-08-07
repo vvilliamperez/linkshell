@@ -8,13 +8,36 @@ A lightweight macOS background tool that lets you press-and-hold a hotkey to dic
 - Mode: push-to-talk by default; toggle mode available
 - Output: types keystrokes into the active app
 
+## Quick setup (recommended)
+
+```bash
+# 1) Install PortAudio (for mic capture)
+brew list portaudio >/dev/null 2>&1 || brew install portaudio
+
+# 2) From the repo root
+git clone https://github.com/vvilliamperez/linkshell.git
+cd linkshell
+
+# 3) One-shot setup
+./setup.sh
+
+# 4) Add your API key
+# Edit .env and set OPENAI_API_KEY=...
+
+# 5) Run (first time in foreground to grant permissions)
+./run.sh
+```
+
+- On first run, macOS will prompt for Microphone and Accessibility permissions.
+- Hold your hotkey, speak, release. Text should paste/type into the active app.
+
 ## Requirements
 - macOS on Apple Silicon (M1/M2/M3/M4)
 - Python 3.10+
 - Homebrew (for PortAudio dependency)
 - An OpenAI API key with access to `whisper-1` or `gpt-4o-mini-transcribe`
 
-## Install
+## Manual install
 
 1) Install PortAudio (needed for microphone recording):
 
@@ -46,15 +69,17 @@ source .venv/bin/activate
 python main.py
 ```
 
-- On first microphone use, macOS will prompt for Microphone permission for `python`.
-- On first keystroke injection, macOS will prompt for Accessibility permission for your terminal (e.g., Terminal or iTerm). Go to System Settings → Privacy & Security → Accessibility and enable your terminal app.
+## Run at login
 
-Once allowed, press and hold your hotkey, speak, and release. The recognized text should type into your current app.
+- Preferred: let the setup script install a LaunchAgent with the correct absolute path for your clone location.
 
-## Run at login (optional)
-You can use a LaunchAgent to auto-start the tool at login.
+```bash
+./setup.sh --install-launchagent
+# then start it (or log out and back in)
+launchctl start com.linkshell.stt
+```
 
-1) Edit the provided plist if needed and load it:
+- Alternate (manual): copy the provided plist (generic) into your LaunchAgents. If you cloned the repo to a non-standard folder, prefer the setup script instead.
 
 ```bash
 launchctl unload "$HOME/Library/LaunchAgents/com.linkshell.stt.plist" 2>/dev/null || true
@@ -62,8 +87,6 @@ cp ./com.linkshell.stt.plist "$HOME/Library/LaunchAgents/"
 launchctl load "$HOME/Library/LaunchAgents/com.linkshell.stt.plist"
 launchctl start com.linkshell.stt
 ```
-
-Note: For Accessibility permissions when running as a LaunchAgent, macOS may attribute control to the Python interpreter inside the venv. If typing does not work, run `python main.py` once in the foreground from your terminal and re-grant Accessibility. 
 
 ## Configuration
 Configure via environment variables (in `.env` or exported in your shell):
