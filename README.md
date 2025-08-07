@@ -1,3 +1,5 @@
+![Linkshell STT Hotkey](./cid.png)
+
 # Linkshell STT Hotkey (macOS)
 
 A lightweight macOS background tool that lets you press-and-hold a hotkey to dictate anywhere on your Mac. While the hotkey is held, it records your microphone, sends the audio to OpenAI's transcription API, and then types the resulting text into the currently focused application.
